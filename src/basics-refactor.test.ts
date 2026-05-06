@@ -549,4 +549,3 @@ Repte:
   type tests = [Expect<Equal<MyFuncReturn, string>>];
   Pista: pots utilitzar typeof per obtenir el tipus d'una variable o funció.
 */
-
