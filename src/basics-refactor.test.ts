@@ -10,7 +10,7 @@ Repte 1:
 
 describe("Problema de nombres", () => {
   it("Ha de sumar els dos nombres", () => {
-    const addTwoNumbers = (a, b) => {
+    const addTwoNumbers = (a: number, b: number) => {
       return a + b;
     };
     expectTypeOf(addTwoNumbers).parameter(0).toEqualTypeOf<number>();
@@ -23,35 +23,38 @@ Repte 2:
   Descobreix com tipar params com un objecte amb una clau first que sigui un nombre i una clau second que també sigui un nombre.
 */
 
-/* describe("Problema de paràmetre objecte", () => {
+describe("Problema de paràmetre objecte", () => {
   it("Ha de sumar els dos nombres", () => {
-    const addTwoNumbers = (params) => {
+    const addTwoNumbers = (params: { first: number; second: number }) => {
       return params.first + params.second;
     };
+
     expect(
       addTwoNumbers({
         first: 2,
         second: 4,
-      })
+      }),
     ).toEqual(6);
 
     expect(
       addTwoNumbers({
         first: 10,
         second: 20,
-      })
+      }),
     ).toEqual(30);
-    expectTypeOf(addTwoNumbers).parameter(0).toEqualTypeOf<{ first: number; second: number }>();
+    expectTypeOf(addTwoNumbers)
+      .parameter(0)
+      .toEqualTypeOf<{ first: number; second: number }>();
   });
-}); */
+});
 
 /*
 Repte 3:
   Has d'esbrinar com tipar l'objecte perquè 'last' sigui opcional.
 */
 
-/* describe("Problema de propietats opcionals", () => {
-  const getName = (params: { first: string; last: string }) => {
+describe("Problema de propietats opcionals", () => {
+  const getName = (params: { first: string; last?: string }) => {
     if (params.last !== undefined) {
       return `${params.first} ${params.last}`;
     }
@@ -74,15 +77,15 @@ Repte 3:
 
     expect(name).toEqual("Jen Simmons");
   });
-}); */
+});
 
 /*
 Repte 4:
   Has d'esbrinar com marcar el paràmetre 'last' com a opcional.
 */
 
-/* describe("Problema de paràmetres opcionals", () => {
-  const getName = (first: string, last: string) => {
+describe("Problema de paràmetres opcionals", () => {
+  const getName = (first: string, last?: string) => {
     if (last !== undefined) {
       return `${first} ${last}`;
     }
@@ -100,14 +103,14 @@ Repte 4:
 
     expect(name).toEqual("Jen Simmons");
   });
-}); */
+});
 
 /*
 Repte 5:
   Consulta la [documentació de TypeScript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html) i determina com canviar defaultUser perquè el test passi.
 */
 
-/* describe("Problema d'assignació de tipus a variables", () => {
+describe("Problema d'assignació de tipus a variables", () => {
   interface User {
     id: number;
     firstName: string;
@@ -117,8 +120,13 @@ Repte 5:
 
   //Com ens assegurem que defaultUser sigui de tipus User
   //EN AQUESTA LÍNIA - no més endavant al codi?
-  
-  const defaultUser = {};
+
+  const defaultUser: User = {
+    id: 1,
+    firstName: "Your name",
+    lastName: "Your last name",
+    isAdmin: false,
+  };
 
   const getUserId = (user: User) => {
     return user.id;
@@ -127,7 +135,7 @@ Repte 5:
   it("Ha d'obtenir l'identificador de l'usuari", () => {
     expect(getUserId(defaultUser)).toEqual(1);
   });
-}); */
+});
 
 /*
 Repte 6:
@@ -135,7 +143,7 @@ Repte 6:
   El valor I_SHOULD_NOT_BE_ALLOWED hauria de provocar un error, eliminant la línia vermella sota el comentari // @ts-expect-error.
 */
 
-/* describe("Problema d'unions", () => {
+describe("Problema d'unions", () => {
   interface User {
     id: number;
     firstName: string;
@@ -144,7 +152,7 @@ Repte 6:
     //- 'admin'
     //- 'user'
     //- 'super-admin'
-    role: string;
+    role: "admin" | "user" | "super-admin";
   }
 
   const defaultUser: User = {
@@ -154,20 +162,20 @@ Repte 6:
     // @ts-expect-error
     role: "I_SHOULD_NOT_BE_ALLOWED",
   };
-}); */
+});
 
 /*
 Repte 7:
   Has de solucionar aquest error de tipus esbrinant com representar arrays.
 */
 
-/* describe("Problema d'arrays", () => {
+describe("Problema d'arrays", () => {
   interface User {
     id: number;
     firstName: string;
     lastName: string;
     role: "admin" | "user" | "super-admin";
-    posts: Post;
+    posts: Post[]; // Array<Post>
   }
 
   interface Post {
@@ -191,14 +199,14 @@ Repte 7:
       },
     ],
   };
-}); */
+});
 
 /*
 Repte 8:
   Anota la funció makeUser perquè sempre retorni un User.
 */
 
-/* describe("Problema d'anotacions de tipus de retorn de funció", () => {
+describe("Problema d'anotacions de tipus de retorn de funció", () => {
   interface User {
     id: number;
     firstName: string;
@@ -214,9 +222,20 @@ Repte 8:
 
   //Com ens assegurem que makeUser SEMPRE
   //retorni un usuari?
-  
-  const makeUser = () => {
-    return {};
+
+  const makeUser = (): User => {
+    return {
+      id: 1,
+      firstName: "Jen",
+      lastName: "Simmons",
+      role: "admin",
+      posts: [
+        {
+          id: 1,
+          title: "El meu primer post",
+        },
+      ],
+    };
   };
 
   it("Ha de retornar un usuari vàlid", () => {
@@ -230,14 +249,14 @@ Repte 8:
     expect(user.posts[0].id).toBeTypeOf("number");
     expect(user.posts[0].title).toBeTypeOf("string");
   });
-}); */
+});
 
 /*
 Repte 9:
   Has d'esbrinar com actualitzar l'anotació del tipus de retorn perquè TypeScript estigui satisfet.
 */
 
-/* describe("Problema de promeses", () => {
+describe("Problema de promeses", () => {
   interface LukeSkywalker {
     name: string;
     height: string;
@@ -249,11 +268,11 @@ Repte 9:
     gender: string;
   }
 
-  const fetchLukeSkywalker = async (): LukeSkywalker => {
+  const fetchLukeSkywalker = async (): Promise<LukeSkywalker> => {
     const data = await fetch("https://swapi.py4e.com/api/people/1").then(
       (res) => {
         return res.json();
-      }
+      },
     );
 
     return data;
@@ -264,15 +283,15 @@ Repte 9:
 
     expect(result).toBeInstanceOf(Promise);
   });
-}); */
+});
 
 /*
 Repte 10:
   Actualitza guitarists perquè estigui tipat com un Set de strings.
 */
 
-/* describe("Problema de Set", () => {
-  const guitarists = new Set();
+describe("Problema de Set", () => {
+  const guitarists = new Set<string>();
 
   guitarists.add("Jimi Hendrix");
   guitarists.add("Eric Clapton");
@@ -292,7 +311,7 @@ Repte 10:
 
     type tests = [Expect<Equal<typeof guitaristsAsArray, string[]>>];
   });
-}); */
+});
 
 /*
 Repte 11:
@@ -300,9 +319,9 @@ Repte 11:
   Actualitza cache perquè estigui tipat correctament i els errors desapareguin. Pista: Consulta com representar objectes amb claus de tipus string i valors tipats.
 */
 
-/* describe("Problema de Record", () => {
+describe("Problema de Record", () => {
   const createCache = () => {
-    const cache = {};
+    const cache: Record<string, string> = {};
 
     const add = (id: string, value: string) => {
       cache[id] = value;
@@ -335,15 +354,20 @@ Repte 11:
 
     expect(cache.cache["123"]).toEqual(undefined);
   });
-}); */
+});
 
 /*
 Repte 12:
   Escriu la funció perquè els tests passin. Pista: utilitza typeof per diferenciar entre nombre i objecte.
 */
 
-/* describe("Problema de filtratge amb typeof", () => {
-  const coerceAmount = (amount: number | { amount: number }) => {};
+describe("Problema de filtratge amb typeof", () => {
+  const coerceAmount = (amount: number | { amount: number }) => {
+    if (typeof amount === "number") {
+      return amount;
+    }
+    return amount.amount;
+  };
 
   it("Ha de retornar l'import quan es passa un objecte", () => {
     expect(coerceAmount({ amount: 20 })).toEqual(20);
@@ -353,7 +377,6 @@ Repte 12:
     expect(coerceAmount(20)).toEqual(20);
   });
 });
- */
 
 /*
 Repte 13:
@@ -361,21 +384,28 @@ Repte 13:
   Pista: hi ha diverses maneres de resoldre aquest repte, prova diferents opcions!
 */
 
-/* describe("Problema de blocs catch", () => {
+describe("Problema de blocs catch", () => {
   const tryCatchDemo = (state: "fail" | "succeed") => {
     try {
       if (state === "fail") {
         throw new Error("Failure!");
       }
     } catch (e) {
-      return e.message;
+      if (e instanceof Error) {
+        return e.message;
+      }
     }
   };
+
+  /*catch (e) {
+      return (e as Error).message
+    }
+  };*/
 
   it("Ha de retornar el missatge quan falla", () => {
     expect(tryCatchDemo("fail")).toEqual("Failure!");
   });
-}); */
+});
 
 /*
 Repte 14:
@@ -387,37 +417,37 @@ Repte 14:
   Pista: pots crear una interfície base i reutilitzar-la amb extends.
 */
 
-/* describe("Problema d'herència amb extends", () => {
-  interface User {
+describe("Problema d'herència amb extends", () => {
+  interface BaseInterface {
     id: string;
+  }
+  interface User extends BaseInterface {
     firstName: string;
     lastName: string;
   }
 
-  interface Post {
-    id: string;
+  interface Post extends BaseInterface {
     title: string;
     body: string;
   }
 
-  interface Comment {
-    id: string;
+  interface Comment extends BaseInterface {
     comment: string;
   }
 
   type tests = [
     Expect<Equal<User, { id: string; firstName: string; lastName: string }>>,
     Expect<Equal<Post, { id: string; title: string; body: string }>>,
-    Expect<Equal<Comment, { id: string; comment: string }>>
+    Expect<Equal<Comment, { id: string; comment: string }>>,
   ];
-}); */
+});
 
 /*
 Repte 15:
   Actualitza el tipus de retorn de la funció perquè sigui 'User & { posts: Post[] }'.
 */
 
-/* describe("Problema d'intersecció de tipus", () => {
+describe("Problema d'intersecció de tipus", () => {
   interface User {
     id: string;
     firstName: string;
@@ -430,7 +460,7 @@ Repte 15:
     body: string;
   }
 
-  const getDefaultUserAndPosts = (): unknown => {
+  const getDefaultUserAndPosts = (): User & { posts: Post[] } => {
     return {
       id: "1",
       firstName: "Jen",
@@ -454,7 +484,7 @@ Repte 15:
 
     expect(userAndPosts.posts[0].id).toBeTypeOf("string");
   });
-}); */
+});
 
 /*
 Repte 16:
@@ -463,7 +493,7 @@ Repte 16:
   Pista: revisa els Utility Types Pick i Omit.
 */
 
-/* describe("Problema d'Omit i Pick", () => {
+describe("Problema d'Omit i Pick", () => {
   interface User {
     id: string;
     firstName: string;
@@ -472,21 +502,21 @@ Repte 16:
 
   //Com creem un nou tipus d'objecte amb NOMÉS les propietats
   //firstName i lastName de User?
-  
 
-  type MyType = unknown;
+  type MyType = Pick<User, "firstName" | "lastName">;
+  //type MyType = Omit<User, "id">
 
   type tests = [Expect<Equal<MyType, { firstName: string; lastName: string }>>];
-}); */
+});
 
 /*
 Repte 17:
   La funció 'onFocusChange' is actualment 'unknown'. Visita la documentació de TypeScript i esbrina el tipus apropiat per la funció.
 */
 
-/* describe("Problema de tipus de funció", () => {
+describe("Problema de tipus de funció", () => {
 
-  const addListener = (onFocusChange: any) => {
+  const addListener = (onFocusChange: (isFocused: boolean) => void) => {
     onFocusChange(true);
     onFocusChange(false);
   };
@@ -496,7 +526,7 @@ Repte 17:
 
     type tests = [Expect<Equal<typeof isFocused, boolean>>];
   });
-}); */
+}); 
 
 /*
 Repte 18:
@@ -504,7 +534,7 @@ Repte 18:
   Consulta la sintaxi de tipatge de funcions i Promise que hem vist anteriorment per ajudar-te.
 */
 
-/* describe("Problema de tipus de funció amb promeses", () => {
+describe("Problema de tipus de funció amb promeses", () => {
 
     interface User {
         id: string;
@@ -513,8 +543,8 @@ Repte 18:
       }
       
       const createThenGetUser = async (
-        createUser: unknown,
-        getUser: unknown,
+        createUser: () => Promise<string>,
+        getUser: (id: string) => Promise<User>,
       ): Promise<User> => {
         const userId: string = await createUser();
       
@@ -540,7 +570,7 @@ Repte 18:
       lastName: "Simmons",
     });
   });
-}); */
+}); 
 
 /*
 Repte:
@@ -549,3 +579,11 @@ Repte:
   type tests = [Expect<Equal<MyFuncReturn, string>>];
   Pista: pots utilitzar typeof per obtenir el tipus d'una variable o funció.
 */
+
+const myFunc = () => {
+  return "hello";
+};
+
+type MyFuncReturn = ReturnType<typeof myFunc>;
+
+type tests = [Expect<Equal<MyFuncReturn, string>>];
